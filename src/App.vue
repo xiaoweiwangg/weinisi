@@ -1,29 +1,36 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <transition>
+    <router-view  v-if="$route.meta.keepAlive"></router-view>
+    </transition>
+    <home-footer></home-footer>
   </div>
 </template>
-
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<script>
+import HomeFooter from "./components/footer/footer.vue"
+export default {
+  components:{
+  HomeFooter
   }
+}
+</script>
+<style lang="scss" scoped>
+@import "./assets/base/px2rem.scss";
+#app{
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  width: pm(750);
+  margin:0 auto;
+.v-enter,
+.v-leave-to{
+  opacity: 0;
+  position: absolute;
+  transform: translateX(pm(-750))
+}
+.v-enter-active,
+.v-leave-active{
+  transition: all .4s
+}
 }
 </style>
